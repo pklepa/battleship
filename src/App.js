@@ -2,7 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 
-			let   x = 'asdasdasd'     ;
+let x = "asdasdasd";
 
 function App() {
   return (
