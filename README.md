@@ -6,6 +6,8 @@ The approach is to let ESLint run the prettier package for Javascript files and 
 
 Also, Husky calls Pretty-quickin order to automatically run Prettier against files that were modified before each commit.
 
+Finally, this is a Test Driven Development and uses Jest as a testing tool.
+
 ### Step-by-step
 
 1. Bootstrap create-react-app
@@ -20,6 +22,8 @@ Also, Husky calls Pretty-quickin order to automatically run Prettier against fil
    npm i prettier eslint-config-prettier eslint-plugin-prettier -D
 
    npm i husky lint-staged -D
+
+   npm install --save-dev jest
    ```
 
 3. Create a .eslintrc file with:
