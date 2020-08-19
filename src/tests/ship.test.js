@@ -1,4 +1,4 @@
-import Ship from "./ship";
+const Ship = require("./ship");
 
 test("its working", () => {
   expect(1).toBe(1);
@@ -31,4 +31,12 @@ test("Ship can sink", () => {
   ship.hit(2);
 
   expect(ship.isSunk()).toBe(true);
+});
+
+test("Ship hit show a damaged body", () => {
+  const ship = Ship("Submarine");
+
+  ship.hit(0);
+
+  expect(ship.body).toEqual([true, false, false]);
 });

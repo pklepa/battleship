@@ -1,34 +1,55 @@
 // Ship Factory function
 function Ship(ship) {
-  const name = ship;
-  const body = Array(determineSize(name)).fill(false);
-  const length = body.length;
+  const { name, body, length } = determineShip(ship);
+
+  function determineShip(shipName) {
+    const shipList = [
+      {
+        name: "Destroyer",
+        length: 2,
+      },
+      {
+        name: "Submarine",
+        length: 3,
+      },
+      {
+        name: "Cruiser",
+        length: 3,
+      },
+      {
+        name: "Battleship",
+        length: 4,
+      },
+      {
+        name: "Carrier",
+        length: 5,
+      },
+    ];
+
+    const ship = shipList.filter((s) => {
+      return s.name === shipName;
+    })[0];
+
+    ship.body = Array(ship.length).fill(false);
+
+    return ship;
+  }
 
   function hit(position) {
-    body[position] = true;
+    this.body[position] = true;
 
-    return isSunk();
+    return this.isSunk();
   }
 
   function isSunk() {
-    return body.reduce((prev, curr) => {
+    const isSunk = this.body.reduce((prev, curr) => {
       return prev && curr;
     }, true);
+
+    return isSunk;
   }
 
-  function determineSize(name) {
-    const nameList = [
-      "Destroyer",
-      "Submarine",
-      "Cruiser",
-      "Battleship",
-      "Carrier",
-    ];
-
-    return nameList.indexOf(name) + 1;
-  }
-
-  return { name, length, hit, isSunk };
+  return { name, length, body, hit, isSunk };
 }
 
-export default Ship;
+module.exports = Ship;
