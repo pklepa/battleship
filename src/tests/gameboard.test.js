@@ -39,8 +39,8 @@ test("placeShip inserts Ship into board", () => {
 
   expect(gameboard.board[2][0]).toMatchObject({
     isEmpty: false,
-    ship: cruiser,
-    shipPosition: 0,
+    shipIndex: 0,
+    shipBodyIndex: 0,
   });
 });
 
@@ -51,8 +51,8 @@ test("placeShip inserts Ship into board with correct values", () => {
 
   expect(gameboard.board[2][1]).toMatchObject({
     isEmpty: false,
-    ship: cruiser,
-    shipPosition: 1,
+    shipIndex: 0,
+    shipBodyIndex: 1,
   });
 });
 
@@ -101,7 +101,7 @@ test("receiveAttack actually hits the ship inside it", () => {
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
   gameboard.receiveAttack([0, 0]);
 
-  expect(gameboard.board[0][0].ship.body).toEqual([true, false, false]);
+  expect(gameboard.getShipAt([0, 0]).body).toEqual([true, false, false]);
 });
 
 test("multiple receiveAttacks sinks the ship hit", () => {
@@ -111,7 +111,7 @@ test("multiple receiveAttacks sinks the ship hit", () => {
   gameboard.receiveAttack([0, 1]);
   gameboard.receiveAttack([0, 2]);
 
-  expect(gameboard.board[0][0].ship.isSunk()).toBe(true);
+  expect(gameboard.getShipAt([0, 0]).isSunk()).toBe(true);
 });
 
 test("isGameOver returns false if there are any ships alive", () => {
@@ -119,8 +119,23 @@ test("isGameOver returns false if there are any ships alive", () => {
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
   gameboard.placeShip(Ship("Destroyer"), [3, 0]);
   gameboard.receiveAttack([0, 0]);
-  console.log(gameboard.ships);
-  console.log(gameboard.board[0][0].ship);
+  gameboard.receiveAttack([0, 1]);
+  gameboard.receiveAttack([0, 2]);
 
   expect(gameboard.isGameOver()).toBe(false);
+});
+
+test("isGameOver returns true if there are no ships left alive", () => {
+  const gameboard = Gameboard();
+  gameboard.placeShip(Ship("Cruiser"), [0, 0]);
+  gameboard.placeShip(Ship("Destroyer"), [3, 0]);
+  gameboard.receiveAttack([0, 0]);
+  gameboard.receiveAttack([0, 1]);
+  gameboard.receiveAttack([0, 2]);
+
+  gameboard.receiveAttack([3, 0]);
+  gameboard.receiveAttack([3, 1]);
+  gameboard.receiveAttack([3, 2]);
+
+  expect(gameboard.isGameOver()).toBe(true);
 });

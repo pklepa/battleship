@@ -3,7 +3,7 @@ const _ = require("lodash");
 // Gameboard Factory
 function Gameboard(Player) {
   const owner = Player;
-  let ships = [];
+  let fleet = [];
 
   // This declaration using .map() is necessary (as in contrast of nesting Array(10).fill(Array(10.fill('')))) as it ensures each row is a separate, independent array, not a reference for the first
   let board = Array(10)
@@ -19,6 +19,8 @@ function Gameboard(Player) {
     const newBoard = _.cloneDeep(this.board);
     const [row, col] = positionArray;
 
+    fleet = [...fleet, Ship];
+
     let valid = true;
 
     for (let i = 0; i < Ship.length; i++) {
@@ -27,8 +29,8 @@ function Gameboard(Player) {
         newBoard[row][col + i] = {
           isEmpty: false,
           wasAtacked: false,
-          ship: Ship,
-          shipPosition: i,
+          shipIndex: fleet.length - 1,
+          shipBodyIndex: i,
         };
       } else {
         valid = false;
@@ -37,11 +39,19 @@ function Gameboard(Player) {
 
     if (valid) {
       this.board = _.cloneDeep(newBoard);
-      this.ships = [...ships, Ship];
       return true;
     } else {
       return false;
     }
+  }
+
+  function getShipAt(positionArray) {
+    const [row, col] = positionArray;
+    const cell = this.board[row][col];
+
+    const ship = fleet[cell.shipIndex];
+
+    return ship;
   }
 
   function receiveAttack(positionArray) {
@@ -52,12 +62,21 @@ function Gameboard(Player) {
     if (cellAttacked.isEmpty) {
       return false;
     } else {
-      cellAttacked.ship.hit(cellAttacked.shipPosition);
+      let ship = fleet[cellAttacked.shipIndex];
+      ship.hit(cellAttacked.shipBodyIndex);
       return true;
     }
   }
 
-  return { board, owner, placeShip, receiveAttack };
+  function isGameOver() {
+    const isGameOver = fleet
+      .map((ship) => ship.isSunk())
+      .reduce((prev, curr) => prev && curr, true);
+
+    return isGameOver;
+  }
+
+  return { board, owner, placeShip, getShipAt, receiveAttack, isGameOver };
 }
 
 module.exports = Gameboard;
