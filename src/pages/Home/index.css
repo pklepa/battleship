@@ -15,24 +15,11 @@
 }
 
 #page-home .content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 700px;
-  height: 700px;
-}
-
-#page-home .content .gameboard {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  gap: 2px;
+  grid-template-columns: 3fr 3fr;
 
-  padding: 20px;
-  border-radius: 10px;
-
-  background-color: var(--color-1);
+  align-items: center;
+  justify-items: center;
 
   width: 80%;
   height: 80%;

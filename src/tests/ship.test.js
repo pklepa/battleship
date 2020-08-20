@@ -1,4 +1,4 @@
-const Ship = require("./ship");
+const Ship = require("../factories/ship");
 
 test("its working", () => {
   expect(1).toBe(1);

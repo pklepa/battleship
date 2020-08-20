@@ -1,7 +1,7 @@
 const _ = require("lodash");
 
-const Player = require("./player");
-const Ship = require("./ship");
+const Player = require("../factories/player");
+const Ship = require("../factories/ship");
 
 it("testing", () => {
   expect(1).toBe(1);
