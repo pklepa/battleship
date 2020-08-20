@@ -1,3 +1,5 @@
+const _ = require("lodash");
+
 const Ship = require("./ship");
 const Gameboard = require("./gameboard");
 
@@ -11,7 +13,7 @@ test("Gameboard() creates empty 10x10 board", () => {
     .map(() =>
       Array(10).fill({
         isEmpty: true,
-        wasAtacked: false,
+        wasAttacked: false,
       })
     );
 
@@ -19,12 +21,18 @@ test("Gameboard() creates empty 10x10 board", () => {
 });
 
 test("Gameboard() creates an object with props board, owner", () => {
-  const board = Array(10).fill(
-    Array(10).fill({
-      isEmpty: true,
-      wasAtacked: false,
-    })
-  );
+  const board = Array(10)
+    .fill(0)
+    .map(() =>
+      Array(10)
+        .fill(0)
+        .map(() => {
+          return {
+            isEmpty: true,
+            wasAttacked: false,
+          };
+        })
+    );
 
   expect(Gameboard("p1")).toMatchObject({
     board: board,
@@ -112,6 +120,15 @@ test("multiple receiveAttacks sinks the ship hit", () => {
   gameboard.receiveAttack([0, 2]);
 
   expect(gameboard.getShipAt([0, 0]).isSunk()).toBe(true);
+});
+
+test("receiveAttack() call with no parameter attacks a random coordinate", () => {
+  const gameboard = Gameboard();
+  gameboard.placeShip(Ship("Cruiser"), [0, 0]);
+  const initialBoard = _.cloneDeep(gameboard);
+  gameboard.receiveAttack();
+
+  expect(initialBoard.board).not.toEqual(gameboard.board);
 });
 
 test("isGameOver returns false if there are any ships alive", () => {

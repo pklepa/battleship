@@ -9,10 +9,14 @@ function Gameboard(Player) {
   let board = Array(10)
     .fill(0)
     .map(() =>
-      Array(10).fill({
-        isEmpty: true,
-        wasAtacked: false,
-      })
+      Array(10)
+        .fill(0)
+        .map(() => {
+          return {
+            isEmpty: true,
+            wasAttacked: false,
+          };
+        })
     );
 
   function placeShip(Ship, positionArray) {
@@ -28,7 +32,7 @@ function Gameboard(Player) {
       if (cell.isEmpty === true) {
         newBoard[row][col + i] = {
           isEmpty: false,
-          wasAtacked: false,
+          wasAttacked: false,
           shipIndex: fleet.length - 1,
           shipBodyIndex: i,
         };
@@ -55,10 +59,11 @@ function Gameboard(Player) {
   }
 
   function receiveAttack(positionArray) {
-    const [row, col] = positionArray;
+    const [row, col] = positionArray || getValidRandomCoordinates(this);
+
     const cellAttacked = this.board[row][col];
 
-    cellAttacked.wasAtacked = true;
+    cellAttacked.wasAttacked = true;
     if (cellAttacked.isEmpty) {
       return false;
     } else {
@@ -66,6 +71,40 @@ function Gameboard(Player) {
       ship.hit(cellAttacked.shipBodyIndex);
       return true;
     }
+  }
+
+  function getValidRandomCoordinates(instance) {
+    let valid = false;
+
+    let untestedRows = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    let untestedCols = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+    let row = untestedRows.pop();
+    let col = untestedCols.pop();
+
+    let boardCopy = _.cloneDeep(instance.board);
+
+    let cell = boardCopy[row][col];
+    let test = cell.wasAttacked;
+
+    while (!valid) {
+      if (test === false) {
+        valid = true;
+      } else {
+        if (untestedCols.length > 0) {
+          col = untestedRows.pop();
+        } else {
+          untestedCols = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+          col = untestedCols.pop();
+          row = untestedRows.pop();
+        }
+      }
+
+      cell = boardCopy[row][col];
+      test = cell.wasAttacked;
+    }
+
+    return [row, col];
   }
 
   function isGameOver() {
