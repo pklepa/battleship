@@ -1,5 +1,4 @@
 const _ = require("lodash");
-const Ship = require("./ship");
 
 // Gameboard Factory
 function Gameboard() {

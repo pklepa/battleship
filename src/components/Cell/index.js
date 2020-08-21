@@ -3,11 +3,19 @@ import React from "react";
 import "./index.css";
 
 function Cell(props) {
-  const { hit } = props;
+  const { cellObj, onClick, position } = props;
 
-  const fill = hit ? "o" : "";
+  const occupied = cellObj.isEmpty ? "" : "occupied";
+  const attacked = cellObj.wasAttacked ? "attacked" : "";
+  const fill = attacked ? "x" : "";
 
-  return <div className="cell">{fill}</div>;
+  const classList = `cell ${occupied} ${attacked}`;
+
+  return (
+    <div className={classList} onClick={() => onClick(position)}>
+      {fill}
+    </div>
+  );
 }
 
 export default Cell;

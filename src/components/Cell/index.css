@@ -4,4 +4,11 @@
   justify-content: center;
 
   background-color: #f5ad8f;
+
+  color: red;
+}
+
+.cell.occupied {
+  background-color: midnightblue;
+  color: white;
 }

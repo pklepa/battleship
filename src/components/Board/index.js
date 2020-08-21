@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./index.css";
 
 import Cell from "../Cell";
 
 function Board(props) {
-  const { player, setPlayer } = props;
+  const { player, onClick } = props;
 
   return (
-    <div className="gameboard">
-      {player.map((row) => {
-        return row.map((cell, i) => {
-          return <Cell key={i} value={cell} />;
-        });
-      })}
+    <div className="board-container">
+      <div className="board-header"></div>
+
+      <div className="gameboard">
+        {player.map((row, i) => {
+          return row.map((cell, j) => {
+            return (
+              <Cell
+                key={j}
+                cellObj={cell}
+                onClick={onClick}
+                position={[i, j]}
+              />
+            );
+          });
+        })}
+      </div>
     </div>
   );
 }
