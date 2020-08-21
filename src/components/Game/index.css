@@ -1,0 +1,10 @@
+.game-wrapper {
+  display: grid;
+  grid-template-columns: 3fr 3fr;
+
+  align-items: center;
+  justify-items: center;
+
+  width: 80%;
+  height: 80%;
+}

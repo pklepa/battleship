@@ -2,16 +2,14 @@ import React, { useState } from "react";
 
 import "./index.css";
 
-import Cell from "./Cell";
+import Cell from "../Cell";
 
-function Board() {
-  const [gameBoard, setGameBoard] = useState(
-    Array(10).fill(Array(10).fill(null))
-  );
+function Board(props) {
+  const { player, setPlayer } = props;
 
   return (
     <div className="gameboard">
-      {gameBoard.map((row) => {
+      {player.map((row) => {
         return row.map((cell, i) => {
           return <Cell key={i} value={cell} />;
         });

@@ -1,6 +1,17 @@
+const _ = require("lodash");
+
 // Ship Factory function
 function Ship(ship) {
   const { name, body, length } = determineShip(ship);
+
+  let orientation = "horizontal";
+
+  const getName = () => name;
+  const getBody = () => body;
+  const getLength = () => length;
+  const getOrientation = () => orientation;
+  const changeOrientation = () =>
+    (orientation = orientation === "horizontal" ? "vertical" : "horizontal");
 
   function determineShip(shipName) {
     const shipList = [
@@ -27,7 +38,7 @@ function Ship(ship) {
     ];
 
     const ship = shipList.filter((s) => {
-      return s.name === shipName;
+      return s.name === _.capitalize(shipName);
     })[0];
 
     ship.body = Array(ship.length).fill(false);
@@ -36,20 +47,28 @@ function Ship(ship) {
   }
 
   function hit(position) {
-    this.body[position] = true;
+    body[position] = true;
 
-    return this.isSunk();
+    return isSunk();
   }
 
   function isSunk() {
-    const isSunk = this.body.reduce((prev, curr) => {
+    const isSunk = body.reduce((prev, curr) => {
       return prev && curr;
     }, true);
 
     return isSunk;
   }
 
-  return { name, length, body, hit, isSunk };
+  return {
+    getName,
+    getLength,
+    getBody,
+    getOrientation,
+    changeOrientation,
+    hit,
+    isSunk,
+  };
 }
 
 module.exports = Ship;

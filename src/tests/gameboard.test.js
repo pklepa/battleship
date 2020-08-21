@@ -3,24 +3,7 @@ const _ = require("lodash");
 const Ship = require("../factories/ship");
 const Gameboard = require("../factories/gameboard");
 
-test("Its working", () => {
-  expect(1).toBe(1);
-});
-
-test("Gameboard() creates empty 10x10 board", () => {
-  const board = Array(10)
-    .fill(0)
-    .map(() =>
-      Array(10).fill({
-        isEmpty: true,
-        wasAttacked: false,
-      })
-    );
-
-  expect(Gameboard().board).toEqual(board);
-});
-
-test("Gameboard() creates an object with props board, owner", () => {
+it("Gameboard() creates empty 10x10 board", () => {
   const board = Array(10)
     .fill(0)
     .map(() =>
@@ -34,43 +17,39 @@ test("Gameboard() creates an object with props board, owner", () => {
         })
     );
 
-  expect(Gameboard("p1")).toMatchObject({
-    board: board,
-    owner: "p1",
-  });
+  expect(Gameboard().getBoard()).toEqual(board);
 });
 
-test("placeShip inserts Ship into board", () => {
+it("placeShip inserts Ship into board", () => {
   const gameboard = Gameboard();
-  const cruiser = Ship("Cruiser");
-  gameboard.placeShip(cruiser, [2, 0]);
+  gameboard.placeShip(Ship("Cruiser"), [0, 0]);
 
-  expect(gameboard.board[2][0]).toMatchObject({
+  expect(gameboard.getBoard()[0][0]).toMatchObject({
     isEmpty: false,
     shipIndex: 0,
     shipBodyIndex: 0,
   });
 });
 
-test("placeShip inserts Ship into board with correct values", () => {
+it("placeShip inserts Ship into board with correct values", () => {
   const gameboard = Gameboard();
   const cruiser = Ship("Cruiser");
   gameboard.placeShip(cruiser, [2, 0]);
 
-  expect(gameboard.board[2][1]).toMatchObject({
+  expect(gameboard.getBoard()[2][1]).toMatchObject({
     isEmpty: false,
     shipIndex: 0,
     shipBodyIndex: 1,
   });
 });
 
-test("placeShip returns true when sucessful", () => {
+it("placeShip returns true when sucessful", () => {
   const gameboard = Gameboard();
 
   expect(gameboard.placeShip(Ship("Cruiser"), [2, 0])).toBe(true);
 });
 
-test("placeShip returns false when unsucessful", () => {
+it("placeShip returns false when unsucessful", () => {
   const gameboard = Gameboard();
   const ship1 = Ship("Cruiser");
   const ship2 = Ship("Destroyer");
@@ -79,7 +58,20 @@ test("placeShip returns false when unsucessful", () => {
   expect(gameboard.placeShip(ship2, [2, 0])).toBe(false);
 });
 
-test("placeShip works independently for different gameboards", () => {
+it("placeShip works for vertical ships", () => {
+  const gameboard = Gameboard();
+  const ship = Ship("Cruiser");
+  ship.changeOrientation();
+  gameboard.placeShip(ship, [0, 0]);
+
+  expect(gameboard.getBoard()[1][0]).toMatchObject({
+    isEmpty: false,
+    shipIndex: 0,
+    shipBodyIndex: 1,
+  });
+});
+
+it("placeShip works independently for different gameboards", () => {
   const gameboard1 = Gameboard();
   const ship1 = Ship("Cruiser");
   gameboard1.placeShip(ship1, [2, 0]);
@@ -90,29 +82,48 @@ test("placeShip works independently for different gameboards", () => {
   expect(gameboard2.placeShip(ship2, [2, 0])).toBe(true);
 });
 
-test("receiveAttack returns true for a successful attack", () => {
+it("placeShipAtRandom insert ship onto board", () => {
+  const gameboard = Gameboard();
+  const ship = Ship("Cruiser");
+  const initialBoard = gameboard.getBoard();
+  gameboard.placeShipAtRandom(ship);
+
+  expect(initialBoard).not.toEqual(gameboard.getBoard());
+});
+
+it("getPlacedFleet returns all the ships that were already placed", () => {
+  const gameboard = Gameboard();
+  const ship1 = Ship("Cruiser");
+  const ship2 = Ship("Submarine");
+  gameboard.placeShip(ship1, [0, 0]);
+  gameboard.placeShip(ship2, [2, 0]);
+
+  expect(gameboard.getPlacedFleet()).toEqual([ship1, ship2]);
+});
+
+it("receiveAttack returns true for a successful attack", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [2, 0]);
 
   expect(gameboard.receiveAttack([2, 0])).toBe(true);
 });
 
-test("receiveAttack returns false for a missed attack", () => {
+it("receiveAttack returns false for a missed attack", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
 
   expect(gameboard.receiveAttack([4, 0])).toBe(false);
 });
 
-test("receiveAttack actually hits the ship inside it", () => {
+it("receiveAttack actually hits the ship inside it", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
   gameboard.receiveAttack([0, 0]);
 
-  expect(gameboard.getShipAt([0, 0]).body).toEqual([true, false, false]);
+  expect(gameboard.getShipAt([0, 0]).getBody()).toEqual([true, false, false]);
 });
 
-test("multiple receiveAttacks sinks the ship hit", () => {
+it("multiple receiveAttacks sinks the ship hit", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
   gameboard.receiveAttack([0, 0]);
@@ -122,16 +133,16 @@ test("multiple receiveAttacks sinks the ship hit", () => {
   expect(gameboard.getShipAt([0, 0]).isSunk()).toBe(true);
 });
 
-test("receiveAttack() call with no parameter attacks a random coordinate", () => {
+it("receiveAttack() call with no parameter attacks a random coordinate", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
-  const initialBoard = _.cloneDeep(gameboard);
+  const initialBoard = _.cloneDeep(gameboard.getBoard());
   gameboard.receiveAttack();
 
-  expect(initialBoard.board).not.toEqual(gameboard.board);
+  expect(initialBoard).not.toEqual(gameboard.getBoard());
 });
 
-test("isGameOver returns false if there are any ships alive", () => {
+it("isGameOver returns false if there are any ships alive", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
   gameboard.placeShip(Ship("Destroyer"), [3, 0]);
@@ -142,7 +153,7 @@ test("isGameOver returns false if there are any ships alive", () => {
   expect(gameboard.isGameOver()).toBe(false);
 });
 
-test("isGameOver returns true if there are no ships left alive", () => {
+it("isGameOver returns true if there are no ships left alive", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
   gameboard.placeShip(Ship("Destroyer"), [3, 0]);

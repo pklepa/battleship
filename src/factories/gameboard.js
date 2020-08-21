@@ -1,8 +1,8 @@
 const _ = require("lodash");
+const Ship = require("./ship");
 
 // Gameboard Factory
-function Gameboard(Player) {
-  const owner = Player;
+function Gameboard() {
   let fleet = [];
 
   // This declaration using .map() is necessary (as in contrast of nesting Array(10).fill(Array(10.fill('')))) as it ensures each row is a separate, independent array, not a reference for the first
@@ -19,39 +19,85 @@ function Gameboard(Player) {
         })
     );
 
+  const getBoard = () => board;
+  const getPlacedFleet = () => fleet;
+
+  // Returns false for an invalid position and true for a valid position
   function placeShip(Ship, positionArray) {
-    const newBoard = _.cloneDeep(this.board);
+    // cloneDeep allows for a true copy of an array of arrays ([[], []])
+    const newBoard = _.cloneDeep(board);
     const [row, col] = positionArray;
 
-    fleet = [...fleet, Ship];
+    const valid = isValidPositionForShip(
+      positionArray,
+      Ship.getLength(),
+      Ship.getOrientation()
+    );
 
-    let valid = true;
+    if (valid) {
+      fleet = [...fleet, Ship];
 
-    for (let i = 0; i < Ship.length; i++) {
-      let cell = newBoard[row][col + i];
-      if (cell.isEmpty === true) {
-        newBoard[row][col + i] = {
+      let rowOffset = 0;
+      let colOffset = 0;
+      for (let i = 0; i < Ship.getLength(); i++) {
+        if (Ship.getOrientation() === "vertical") rowOffset = i;
+        else colOffset = i;
+
+        newBoard[row + rowOffset][col + colOffset] = {
           isEmpty: false,
           wasAttacked: false,
+          shipName: Ship.getName(),
           shipIndex: fleet.length - 1,
           shipBodyIndex: i,
         };
-      } else {
-        valid = false;
       }
-    }
 
-    if (valid) {
-      this.board = _.cloneDeep(newBoard);
+      board = _.cloneDeep(newBoard);
       return true;
     } else {
       return false;
     }
   }
 
+  function placeShipAtRandom(Ship) {
+    let positionArray;
+    let done = false;
+
+    while (!done) {
+      positionArray = getRandomEmptyCellCoordinates(board);
+      done = isValidPositionForShip(positionArray, Ship.getLength());
+    }
+
+    placeShip(Ship, positionArray);
+  }
+
+  function isValidPositionForShip(positionArray, shipLength, shipOrientation) {
+    const [row, col] = positionArray;
+    const isVertical = shipOrientation === "vertical";
+
+    // Test if the ship placement is out of bounds
+    if (col + shipLength > 9 && !isVertical) return false;
+    if (row + shipLength > 9 && isVertical) return false;
+
+    // Test if the ship will fall onto an occupied spot
+    let rowOffset = 0;
+    let colOffset = 0;
+    for (let i = 0; i < shipLength; i++) {
+      if (isVertical) rowOffset = i;
+      else colOffset = i;
+
+      let cell = board[row + rowOffset][col + colOffset];
+      if (cell.isEmpty) continue;
+      else return false;
+    }
+
+    // If all is well, return true
+    return true;
+  }
+
   function getShipAt(positionArray) {
     const [row, col] = positionArray;
-    const cell = this.board[row][col];
+    const cell = board[row][col];
 
     const ship = fleet[cell.shipIndex];
 
@@ -59,9 +105,9 @@ function Gameboard(Player) {
   }
 
   function receiveAttack(positionArray) {
-    const [row, col] = positionArray || getValidRandomCoordinates(this);
+    const [row, col] = positionArray || getRandomEmptyCellCoordinates(board);
 
-    const cellAttacked = this.board[row][col];
+    const cellAttacked = board[row][col];
 
     cellAttacked.wasAttacked = true;
     if (cellAttacked.isEmpty) {
@@ -73,7 +119,7 @@ function Gameboard(Player) {
     }
   }
 
-  function getValidRandomCoordinates(instance) {
+  function getRandomEmptyCellCoordinates(boardToAnalize) {
     let valid = false;
 
     let untestedRows = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
@@ -82,9 +128,7 @@ function Gameboard(Player) {
     let row = untestedRows.pop();
     let col = untestedCols.pop();
 
-    let boardCopy = _.cloneDeep(instance.board);
-
-    let cell = boardCopy[row][col];
+    let cell = boardToAnalize[row][col];
     let test = cell.wasAttacked;
 
     while (!valid) {
@@ -100,7 +144,7 @@ function Gameboard(Player) {
         }
       }
 
-      cell = boardCopy[row][col];
+      cell = boardToAnalize[row][col];
       test = cell.wasAttacked;
     }
 
@@ -115,7 +159,15 @@ function Gameboard(Player) {
     return isGameOver;
   }
 
-  return { board, owner, placeShip, getShipAt, receiveAttack, isGameOver };
+  return {
+    getBoard,
+    getPlacedFleet,
+    placeShip,
+    placeShipAtRandom,
+    getShipAt,
+    receiveAttack,
+    isGameOver,
+  };
 }
 
 module.exports = Gameboard;
