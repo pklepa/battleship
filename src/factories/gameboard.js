@@ -65,7 +65,11 @@ function Gameboard() {
 
     while (!done) {
       positionArray = getRandomEmptyCellCoordinates(board);
-      done = isValidPositionForShip(positionArray, Ship.getLength());
+      done = isValidPositionForShip(
+        positionArray,
+        Ship.getLength(),
+        Ship.getOrientation()
+      );
     }
 
     placeShip(Ship, positionArray);

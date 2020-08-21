@@ -19,6 +19,15 @@ test("Ship can change oriatation", () => {
   expect(ship.getOrientation()).toBe("vertical");
 });
 
+test("Ship random orientation works", () => {
+  const orientationArr = [];
+  for (let i = 0; i < 100; i++) {
+    orientationArr.push(Ship("Cruiser").randomizeOrientation());
+  }
+
+  expect(orientationArr).not.toEqual(Array(100).fill("horizontal"));
+});
+
 test("Ship can be hit", () => {
   expect(Ship("Cruiser").hit(1)).toBe(false);
 });

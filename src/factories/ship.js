@@ -12,6 +12,12 @@ function Ship(ship) {
   const getOrientation = () => orientation;
   const changeOrientation = () =>
     (orientation = orientation === "horizontal" ? "vertical" : "horizontal");
+  const randomizeOrientation = () => {
+    let random = Math.floor(Math.random() * 2);
+    orientation = random ? "vertical" : "horizontal";
+
+    return orientation;
+  };
 
   function determineShip(shipName) {
     const shipList = [
@@ -66,6 +72,7 @@ function Ship(ship) {
     getBody,
     getOrientation,
     changeOrientation,
+    randomizeOrientation,
     hit,
     isSunk,
   };

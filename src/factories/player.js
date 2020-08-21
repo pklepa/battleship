@@ -17,7 +17,6 @@ function Player(playerName) {
     return enemyPlayer.receiveAttack(positionArray);
   }
 
-  // TODO: Make ships to be randomly oriented (coinflip between hor and vert)
   function autoPlaceAll() {
     const ships = [
       "destroyer",
@@ -29,12 +28,23 @@ function Player(playerName) {
 
     ships.forEach((s) => {
       const ship = Ship(s);
+      ship.randomizeOrientation();
       this.placeShipAtRandom(ship);
     });
   }
 
-  // TODO: Create a console visualizer for the board ([0, 0, 0, 'cruiser', 'cruiser' ...], [...])
-  // TODO: Simulate a game using the console visualizer and attacking enemy board
+  function getSimplifiedBoard() {
+    let simpleBoard = this.getBoard().map((row) => {
+      return row.map((cell) => {
+        if (cell.wasAttacked && cell.isEmpty) return ".";
+        if (cell.wasAttacked && !cell.isEmpty) return "*";
+        if (cell.isEmpty === true) return 0;
+        else return cell.shipName;
+      });
+    });
+
+    return simpleBoard;
+  }
 
   return {
     name,
@@ -47,6 +57,7 @@ function Player(playerName) {
     getShipAt,
     isGameOver,
     autoPlaceAll,
+    getSimplifiedBoard,
   };
 }
 

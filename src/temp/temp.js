@@ -13,6 +13,18 @@ console.log("hi from temp");
 // console.log(initialBoard);
 // console.log(p1.getBoard());
 
-const gb = Gameboard();
-const ship = Ship("Carrier");
-gb.placeShipAtRandom(ship);
+const p1 = Player("player 1");
+p1.autoPlaceAll();
+
+const p2 = Player("Enemy");
+p2.autoPlaceAll();
+p2.attack(p1);
+p2.attack(p1);
+p2.attack(p1);
+p2.attack(p1);
+
+console.log(p1.name);
+console.table(p1.getSimplifiedBoard());
+
+console.log(p2.name);
+console.table(p2.getSimplifiedBoard());
