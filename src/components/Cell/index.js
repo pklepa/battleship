@@ -7,13 +7,17 @@ function Cell(props) {
 
   const occupied = cellObj.isEmpty ? "" : "occupied";
   const attacked = cellObj.wasAttacked ? "attacked" : "";
-  const fill = attacked ? "x" : "";
+  let fill = "";
+  if (attacked) {
+    if (occupied) fill = "close";
+    else fill = "lens";
+  }
 
   const classList = `cell ${occupied} ${attacked}`;
 
   return (
     <div className={classList} onClick={() => onClick(position)}>
-      {fill}
+      <p>{fill}</p>
     </div>
   );
 }

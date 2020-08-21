@@ -3,12 +3,25 @@
   align-items: center;
   justify-content: center;
 
-  background-color: #f5ad8f;
-
-  color: red;
+  background-color: var(--empty-cell);
 }
 
 .cell.occupied {
-  background-color: midnightblue;
+  background-color: var(--ship-color);
+}
+
+.cell.occupied.attacked {
+  background-color: var(--ship-hit-color);
+}
+
+.cell p {
+  color: var(--background-color);
+  font-family: "Material Icons";
+  font-size: 10px;
+}
+
+.cell.occupied p {
   color: white;
+  font-size: 20px;
+  font-style: bold;
 }

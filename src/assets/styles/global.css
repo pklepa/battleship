@@ -1,5 +1,11 @@
 :root {
   --primary-color: #c7b198;
-  --background-color: #bfc0c0;
-  --color-1: #ef8354;
+  --background-color: #1b262c;
+  --color-1: #1b262c;
+
+  --ship-color: #fa744f;
+  --ship-hit-color: #313b41;
+  --empty-cell: #fdcb9e;
+
+  color: midnightblue;
 }

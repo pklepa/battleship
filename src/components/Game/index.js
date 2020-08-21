@@ -15,11 +15,13 @@ function Game() {
   const [update, setUpdate] = useState(true);
 
   function endTurn(lastPlayer) {
-    setGameOver(lastPlayer.isGameOver());
-
-    const nextTurn =
-      lastPlayer.name === player.name ? computer.name : player.name;
-    setTurn(nextTurn);
+    if (lastPlayer.isGameOver() === true) {
+      setGameOver(lastPlayer.isGameOver());
+    } else {
+      const nextTurn =
+        lastPlayer.name === player.name ? computer.name : player.name;
+      setTurn(nextTurn);
+    }
   }
 
   function handleAutoPlace() {
@@ -32,6 +34,8 @@ function Game() {
   }
 
   function handlePlayerAttack(position) {
+    if (turn !== player.name) return;
+
     computer.receiveAttack(position);
     setComputer(computer);
     endTurn(player);
@@ -44,14 +48,14 @@ function Game() {
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      if (turn === computer.name) handleComputerAttack();
-    }, 500);
+    if (turn === computer.name) {
+      setTimeout(() => handleComputerAttack(), 500);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
 
   useEffect(() => {
-    console.log(gameOver);
+    if (gameOver === true) alert("Gameover!");
   }, [gameOver]);
 
   return (
