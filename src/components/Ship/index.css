@@ -1,8 +1,12 @@
 .ship-component {
   cursor: pointer;
+  transition: opacity 300ms;
 }
 
 .ship-component:hover {
   opacity: 60%;
-  transition: 300ms;
+}
+
+.ship-component .cell {
+  opacity: 1;
 }
