@@ -4,6 +4,7 @@ import "./index.css";
 
 import Board from "../Board";
 import * as Player from "../../factories/player";
+import Harbour from "../Harbour";
 
 function Game() {
   const [player, setPlayer] = useState(Player("Player"));
@@ -24,15 +25,6 @@ function Game() {
     }
   }
 
-  function handleAutoPlace() {
-    player.autoPlaceAll();
-    computer.autoPlaceAll();
-
-    setPlayer(player);
-    setComputer(computer);
-    setUpdate(!update);
-  }
-
   function handlePlayerAttack(position) {
     if (turn !== player.name) return;
 
@@ -47,8 +39,23 @@ function Game() {
     endTurn(computer);
   }
 
+  function handleResetPlacement() {
+    setPlayer(Player(player.name));
+    setComputer(Player(computer.name));
+    setUpdate(!update);
+  }
+
+  function handleAutoPlace() {
+    player.autoPlaceAll();
+    computer.autoPlaceAll();
+
+    setPlayer(player);
+    setComputer(computer);
+    setUpdate(!update);
+  }
+
   useEffect(() => {
-    if (turn === computer.name) {
+    if (turn === computer.name && gameOver === false) {
       setTimeout(() => handleComputerAttack(), 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,11 +67,12 @@ function Game() {
 
   return (
     <div className="game-wrapper">
+      <Harbour
+        handleAutoPlace={handleAutoPlace}
+        handleResetPlacement={handleResetPlacement}
+      />
       <Board player={player.getBoard()} />
       <Board player={computer.getBoard()} onClick={handlePlayerAttack} />
-      <button id="btn-autoPlace" onClick={handleAutoPlace}>
-        Auto Place
-      </button>
     </div>
   );
 }

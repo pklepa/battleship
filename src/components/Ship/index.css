@@ -1,0 +1,8 @@
+.ship-component {
+  cursor: pointer;
+}
+
+.ship-component:hover {
+  opacity: 60%;
+  transition: 300ms;
+}

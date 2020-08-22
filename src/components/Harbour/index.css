@@ -1,0 +1,37 @@
+.harbour-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  padding: 20px 0;
+}
+
+.harbour-container .buttons {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  gap: 8px;
+}
+
+.harbour-container .buttons button {
+  color: var(--empty-cell);
+  font-size: 16px;
+  font-family: "Cutive Mono", monospace;
+  font-weight: bold;
+
+  border: 2px solid var(--empty-cell);
+  border-radius: 8px;
+}
+
+.harbour-container .buttons button:hover {
+  background-color: var(--empty-cell);
+  color: var(--background-color);
+
+  transition: 300ms;
+}
+
+.harbour-container .ships {
+  display: flex;
+}

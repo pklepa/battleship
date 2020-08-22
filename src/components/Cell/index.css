@@ -4,6 +4,12 @@
   justify-content: center;
 
   background-color: var(--empty-cell);
+  cursor: pointer;
+  transition: 300ms;
+}
+
+.cell:hover {
+  opacity: 60%;
 }
 
 .cell.occupied {
