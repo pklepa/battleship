@@ -3,10 +3,6 @@ const _ = require("lodash");
 const Player = require("../factories/player");
 const Ship = require("../factories/ship");
 
-it("testing", () => {
-  expect(1).toBe(1);
-});
-
 it("Player exposes Gameboard's getBoard method", () => {
   const board = Array(10)
     .fill(0)
@@ -33,6 +29,18 @@ it("Player exposes Gameboard's other methods", () => {
   p1.placeShip(ship2, [2, 0]);
 
   expect(p1.getPlacedFleet()).toEqual([ship1, ship2]);
+});
+
+it("Player has a fleet by default", () => {
+  const p1 = Player("p1");
+
+  expect(p1.getFleet()).toEqual([
+    expect.any(Object),
+    expect.any(Object),
+    expect.any(Object),
+    expect.any(Object),
+    expect.any(Object),
+  ]);
 });
 
 it("Can attack opponent", () => {

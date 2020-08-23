@@ -13,6 +13,18 @@ function Player(playerName) {
     isGameOver,
   } = Gameboard();
 
+  const fleet = [
+    Ship("Destroyer"),
+    Ship("Submarine"),
+    Ship("Cruiser"),
+    Ship("Battleship"),
+    Ship("Carrier"),
+  ];
+
+  function getFleet() {
+    return fleet;
+  }
+
   function attack(enemyPlayer, positionArray) {
     return enemyPlayer.receiveAttack(positionArray);
   }
@@ -51,6 +63,7 @@ function Player(playerName) {
     attack,
     receiveAttack,
     getBoard,
+    getFleet,
     getPlacedFleet,
     placeShip,
     placeShipAtRandom,

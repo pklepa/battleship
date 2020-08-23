@@ -2,7 +2,7 @@ const _ = require("lodash");
 
 // Gameboard Factory
 function Gameboard() {
-  let fleet = [];
+  let placedFleet = [];
 
   // This declaration using .map() is necessary (as in contrast of nesting Array(10).fill(Array(10.fill('')))) as it ensures each row is a separate, independent array, not a reference for the first
   let board = Array(10)
@@ -19,7 +19,7 @@ function Gameboard() {
     );
 
   const getBoard = () => board;
-  const getPlacedFleet = () => fleet;
+  const getPlacedFleet = () => placedFleet;
 
   // Returns false for an invalid position and true for a valid position
   function placeShip(Ship, positionArray) {
@@ -34,7 +34,7 @@ function Gameboard() {
     );
 
     if (valid) {
-      fleet = [...fleet, Ship];
+      placedFleet = [...placedFleet, Ship];
 
       let rowOffset = 0;
       let colOffset = 0;
@@ -46,7 +46,7 @@ function Gameboard() {
           isEmpty: false,
           wasAttacked: false,
           shipName: Ship.getName(),
-          shipIndex: fleet.length - 1,
+          shipIndex: placedFleet.length - 1,
           shipBodyIndex: i,
         };
       }
@@ -102,7 +102,7 @@ function Gameboard() {
     const [row, col] = positionArray;
     const cell = board[row][col];
 
-    const ship = fleet[cell.shipIndex];
+    const ship = placedFleet[cell.shipIndex];
 
     return ship;
   }
@@ -116,7 +116,7 @@ function Gameboard() {
     if (cellAttacked.isEmpty) {
       return false;
     } else {
-      let ship = fleet[cellAttacked.shipIndex];
+      let ship = placedFleet[cellAttacked.shipIndex];
       ship.hit(cellAttacked.shipBodyIndex);
       return true;
     }
@@ -155,7 +155,7 @@ function Gameboard() {
   }
 
   function isGameOver() {
-    const isGameOver = fleet
+    const isGameOver = placedFleet
       .map((ship) => ship.isSunk())
       .reduce((prev, curr) => prev && curr, true);
 
