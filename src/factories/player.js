@@ -30,18 +30,9 @@ function Player(playerName) {
   }
 
   function autoPlaceAll() {
-    const ships = [
-      "destroyer",
-      "submarine",
-      "cruiser",
-      "battleship",
-      "carrier",
-    ];
-
-    ships.forEach((s) => {
-      const ship = Ship(s);
-      ship.randomizeOrientation();
-      this.placeShipAtRandom(ship);
+    fleet.forEach((s) => {
+      s.randomizeOrientation();
+      this.placeShipAtRandom(s);
     });
   }
 
