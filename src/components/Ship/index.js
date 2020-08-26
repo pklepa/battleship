@@ -38,6 +38,7 @@ function Ship(props) {
             key={i}
             cellObj={{ isEmpty: false, wasAttacked: false }}
             onClick={() => {}}
+            showShips={true}
           />
         );
       })}

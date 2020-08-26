@@ -98,11 +98,13 @@ function Game() {
         name={player.name}
         board={player.getBoard()}
         onClick={handleManualPlace}
+        showShips={true}
       />
       <Board
         name={computer.name}
         board={computer.getBoard()}
         onClick={handlePlayerAttack}
+        showShips={false}
       />
     </div>
   );

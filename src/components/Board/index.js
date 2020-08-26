@@ -5,7 +5,7 @@ import "./index.css";
 import Cell from "../Cell";
 
 function Board(props) {
-  const { name, board, onClick } = props;
+  const { name, board, onClick, showShips } = props;
 
   return (
     <div className="board-container">
@@ -18,6 +18,7 @@ function Board(props) {
                 cellObj={cell}
                 onClick={onClick}
                 position={[i, j]}
+                showShips={showShips}
               />
             );
           });

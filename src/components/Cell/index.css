@@ -12,7 +12,7 @@
   opacity: 60%;
 }
 
-.cell.occupied {
+.cell.occupied.show {
   background-color: var(--ship-color);
 }
 
