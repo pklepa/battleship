@@ -30,7 +30,12 @@ function Player(playerName) {
   }
 
   function autoPlaceAll() {
-    fleet.forEach((s) => {
+    const placedFleet = this.getPlacedFleet();
+    const unplacedFleet = fleet.filter((ship) => {
+      return placedFleet.indexOf(ship) === -1;
+    });
+
+    unplacedFleet.forEach((s) => {
       s.randomizeOrientation();
       this.placeShipAtRandom(s);
     });
