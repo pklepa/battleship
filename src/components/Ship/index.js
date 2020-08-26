@@ -4,7 +4,7 @@ import "./index.css";
 import Cell from "../Cell";
 
 function Ship(props) {
-  const { length, horizontalOrientation, onClick } = props;
+  const { length, horizontalOrientation, onClick, isSelected } = props;
 
   const body = Array(length).fill("");
 
@@ -14,6 +14,7 @@ function Ship(props) {
     height: 34,
     gap: 2,
     marginBottom: 20,
+    opacity: isSelected ? 0.4 : 1,
   };
 
   const styleVertical = {
@@ -22,6 +23,7 @@ function Ship(props) {
     width: 34,
     gap: 2,
     marginLeft: 20,
+    opacity: isSelected ? 0.4 : 1,
   };
 
   return (

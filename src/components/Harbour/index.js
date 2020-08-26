@@ -6,6 +6,7 @@ import Ship from "../Ship";
 function Harbour(props) {
   const {
     shipsToLoad,
+    shipsLoaded,
     prepareManualPlace,
     handleAutoPlace,
     handleResetPlacement,
@@ -15,8 +16,8 @@ function Harbour(props) {
   const [horizontalShips, setHorizontalShips] = useState({
     flexDirection: "column",
   });
+  const [selectedShip, setSelectedShip] = useState(false);
 
-  // TODO: This function should change the orientation of all ships
   function rotateShipsDisplay() {
     setHorizontalOrientation(!horizontalOrientation);
     setHorizontalShips(
@@ -24,6 +25,16 @@ function Harbour(props) {
     );
 
     handleHarbourRotation();
+  }
+
+  function handleClick(ship) {
+    // If the clicked ship is placed on the board already, ignore click
+    if (shipsLoaded.indexOf(ship) > -1) return;
+
+    if (selectedShip === ship) setSelectedShip(false);
+    else setSelectedShip(ship);
+
+    prepareManualPlace(ship);
   }
 
   return (
@@ -35,7 +46,10 @@ function Harbour(props) {
               key={i}
               horizontalOrientation={horizontalOrientation}
               length={ship.getLength()}
-              onClick={() => prepareManualPlace(ship)}
+              onClick={() => handleClick(ship)}
+              isSelected={
+                selectedShip === ship || shipsLoaded.indexOf(ship) > -1
+              }
             />
           );
         })}

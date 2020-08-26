@@ -1,4 +1,8 @@
-.gameboard {
+.board-container {
+  position: relative;
+}
+
+.board-container .gameboard {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
@@ -11,4 +15,22 @@
 
   width: 400px;
   height: 400px;
+}
+
+.board-container .board-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+  position: absolute;
+  bottom: -15px;
+}
+
+.board-container .board-footer h1 {
+  color: var(--empty-cell);
+  font-size: 20px;
+  font-family: "Cutive Mono", monospace;
+  font-weight: bold;
 }

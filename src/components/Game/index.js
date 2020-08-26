@@ -62,15 +62,13 @@ function Game() {
 
   function handleManualPlace(position) {
     if (currentShip) {
-      player.placeShip(currentShip, position);
-      setCurrentShip(false);
+      if (player.placeShip(currentShip, position)) setCurrentShip(false);
     }
   }
 
   function handleHarbourRotation() {
     player.getFleet().map((ship) => {
       ship.changeOrientation();
-      console.log(ship.getName(), ship.getOrientation());
     });
   }
 
@@ -90,13 +88,22 @@ function Game() {
     <div className="game-wrapper">
       <Harbour
         shipsToLoad={player.getFleet()}
+        shipsLoaded={player.getPlacedFleet()}
         prepareManualPlace={prepareManualPlace}
         handleAutoPlace={handleAutoPlace}
         handleResetPlacement={handleResetPlacement}
         handleHarbourRotation={handleHarbourRotation}
       />
-      <Board board={player.getBoard()} onClick={handleManualPlace} />
-      <Board board={computer.getBoard()} onClick={handlePlayerAttack} />
+      <Board
+        name={player.name}
+        board={player.getBoard()}
+        onClick={handleManualPlace}
+      />
+      <Board
+        name={computer.name}
+        board={computer.getBoard()}
+        onClick={handlePlayerAttack}
+      />
     </div>
   );
 }

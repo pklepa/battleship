@@ -4,7 +4,7 @@
 }
 
 .ship-component:hover {
-  opacity: 60%;
+  opacity: 0.6 !important;
 }
 
 .ship-component .cell {
