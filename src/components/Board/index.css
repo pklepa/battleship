@@ -2,6 +2,25 @@
   position: relative;
 }
 
+.board-container .board-overlay {
+  position: absolute;
+  visibility: visible;
+
+  width: 100%;
+  height: 100%;
+  margin: 20px;
+
+  opacity: 0.8;
+  background-color: var(--background-color);
+
+  transition: visibility 0s, opacity 0.5s ease-out;
+}
+
+.board-container .board-overlay.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
 .board-container .gameboard {
   display: grid;
   grid-template-columns: repeat(10, 1fr);

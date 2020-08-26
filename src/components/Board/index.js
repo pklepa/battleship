@@ -5,10 +5,16 @@ import "./index.css";
 import Cell from "../Cell";
 
 function Board(props) {
-  const { name, board, onClick, showShips } = props;
+  const { name, board, onClick, showShips, disableBoard } = props;
+
+  const hideOverlay = {
+    visibility: "hidden",
+  };
 
   return (
     <div className="board-container">
+      <div className={`board-overlay ${disableBoard ? "" : "hidden"}`}></div>
+
       <div className="gameboard">
         {board.map((row, i) => {
           return row.map((cell, j) => {
