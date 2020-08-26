@@ -101,18 +101,17 @@ it("getPlacedFleet returns all the ships that were already placed", () => {
   expect(gameboard.getPlacedFleet()).toEqual([ship1, ship2]);
 });
 
-it("receiveAttack returns true for a successful attack", () => {
+it("receiveAttack returns true for an allowed attack (cell that wasnt attacked before)", () => {
   const gameboard = Gameboard();
-  gameboard.placeShip(Ship("Cruiser"), [2, 0]);
 
   expect(gameboard.receiveAttack([2, 0])).toBe(true);
 });
 
-it("receiveAttack returns false for a missed attack", () => {
+it("receiveAttack returns false for an attack not allowed (cell that has been attacked before)", () => {
   const gameboard = Gameboard();
-  gameboard.placeShip(Ship("Cruiser"), [0, 0]);
+  gameboard.receiveAttack([2, 0]);
 
-  expect(gameboard.receiveAttack([4, 0])).toBe(false);
+  expect(gameboard.receiveAttack([2, 0])).toBe(false);
 });
 
 it("receiveAttack actually hits the ship inside it", () => {

@@ -67,7 +67,7 @@ it("Makes random attack if no coordinates are specified", () => {
 it("Autoplaces all ships", () => {
   const p1 = Player("p1");
   const initialBoard = _.cloneDeep(p1.getBoard());
-  console.log(p1.autoPlaceAll());
+  p1.autoPlaceAll();
 
   expect(initialBoard).not.toEqual(p1.getBoard());
 });

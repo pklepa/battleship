@@ -63,7 +63,7 @@ function Gameboard() {
     let done = false;
 
     while (!done) {
-      positionArray = getRandomEmptyCellCoordinates(board);
+      positionArray = getRandomUnattackedCoordinates(board);
       done = isValidPositionForShip(
         positionArray,
         Ship.getLength(),
@@ -108,21 +108,22 @@ function Gameboard() {
   }
 
   function receiveAttack(positionArray) {
-    const [row, col] = positionArray || getRandomEmptyCellCoordinates(board);
+    const [row, col] = positionArray || getRandomUnattackedCoordinates(board);
 
     const cellAttacked = board[row][col];
 
-    cellAttacked.wasAttacked = true;
-    if (cellAttacked.isEmpty) {
-      return false;
-    } else {
+    if (cellAttacked.wasAttacked) return false;
+    else cellAttacked.wasAttacked = true;
+
+    if (!cellAttacked.isEmpty) {
       let ship = placedFleet[cellAttacked.shipIndex];
       ship.hit(cellAttacked.shipBodyIndex);
-      return true;
     }
+
+    return true;
   }
 
-  function getRandomEmptyCellCoordinates(boardToAnalize) {
+  function getRandomUnattackedCoordinates(boardToAnalize) {
     let valid = false;
 
     let untestedRows = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);

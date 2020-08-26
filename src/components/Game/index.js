@@ -75,7 +75,7 @@ function Game() {
   // Alternates turns between player and COM
   useEffect(() => {
     if (turn === computer.name && gameOver === false) {
-      setTimeout(() => handleComputerAttack(), 0);
+      setTimeout(() => handleComputerAttack(), 500);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
