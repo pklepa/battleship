@@ -79,8 +79,8 @@ function Gameboard() {
     const isVertical = shipOrientation === "vertical";
 
     // Test if the ship placement is out of bounds
-    if (col + shipLength > 9 && !isVertical) return false;
-    if (row + shipLength > 9 && isVertical) return false;
+    if (col + shipLength > 10 && !isVertical) return false;
+    if (row + shipLength > 10 && isVertical) return false;
 
     // Test if the ship will fall onto an occupied spot
     let rowOffset = 0;
