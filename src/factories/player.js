@@ -14,11 +14,11 @@ function Player(playerName) {
   } = Gameboard();
 
   const fleet = [
-    Ship("Destroyer"),
-    Ship("Submarine"),
-    Ship("Cruiser"),
-    Ship("Battleship"),
     Ship("Carrier"),
+    Ship("Battleship"),
+    Ship("Cruiser"),
+    Ship("Submarine"),
+    Ship("Destroyer"),
   ];
 
   function getFleet() {

@@ -4,30 +4,41 @@ import "./index.css";
 import Ship from "../Ship";
 
 function Harbour(props) {
-  const { handleAutoPlace, handleResetPlacement } = props;
+  const {
+    shipsToLoad,
+    prepareManualPlace,
+    handleAutoPlace,
+    handleResetPlacement,
+    handleHarbourRotation,
+  } = props;
   const [horizontalOrientation, setHorizontalOrientation] = useState(true);
   const [horizontalShips, setHorizontalShips] = useState({
     flexDirection: "column",
   });
 
+  // TODO: This function should change the orientation of all ships
   function rotateShipsDisplay() {
-    horizontalOrientation
-      ? setHorizontalShips({})
-      : setHorizontalShips({
-          flexDirection: "column",
-        });
-
     setHorizontalOrientation(!horizontalOrientation);
+    setHorizontalShips(
+      horizontalOrientation ? {} : { flexDirection: "column" }
+    );
+
+    handleHarbourRotation();
   }
 
   return (
     <div className="harbour-container">
       <div style={horizontalShips} className="ships">
-        <Ship horizontalOrientation={horizontalOrientation} length={5} />
-        <Ship horizontalOrientation={horizontalOrientation} length={4} />
-        <Ship horizontalOrientation={horizontalOrientation} length={3} />
-        <Ship horizontalOrientation={horizontalOrientation} length={3} />
-        <Ship horizontalOrientation={horizontalOrientation} length={2} />
+        {shipsToLoad.map((ship, i) => {
+          return (
+            <Ship
+              key={i}
+              horizontalOrientation={horizontalOrientation}
+              length={ship.getLength()}
+              onClick={() => prepareManualPlace(ship)}
+            />
+          );
+        })}
       </div>
       <div className="buttons">
         <button onClick={rotateShipsDisplay}>rotate</button>

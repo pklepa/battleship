@@ -3,7 +3,7 @@ import React from "react";
 import "./index.css";
 
 function Cell(props) {
-  const { cellObj, onClick, position } = props;
+  const { cellObj, onClick, position, disableClick } = props;
 
   const occupied = cellObj.isEmpty ? "" : "occupied";
   const attacked = cellObj.wasAttacked ? "attacked" : "";

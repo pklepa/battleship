@@ -5,14 +5,14 @@ import "./index.css";
 import Cell from "../Cell";
 
 function Board(props) {
-  const { player, onClick } = props;
+  const { board, onClick } = props;
 
   return (
     <div className="board-container">
       <div className="board-header"></div>
 
       <div className="gameboard">
-        {player.map((row, i) => {
+        {board.map((row, i) => {
           return row.map((cell, j) => {
             return (
               <Cell

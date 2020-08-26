@@ -4,7 +4,7 @@ import "./index.css";
 import Cell from "../Cell";
 
 function Ship(props) {
-  const { length, horizontalOrientation } = props;
+  const { length, horizontalOrientation, onClick } = props;
 
   const body = Array(length).fill("");
 
@@ -28,10 +28,15 @@ function Ship(props) {
     <div
       style={horizontalOrientation ? styleHorizontal : styleVertical}
       className="ship-component"
+      onClick={onClick}
     >
       {body.map((c, i) => {
         return (
-          <Cell key={i} cellObj={{ isEmpty: false, wasAttacked: false }} />
+          <Cell
+            key={i}
+            cellObj={{ isEmpty: false, wasAttacked: false }}
+            onClick={() => {}}
+          />
         );
       })}
     </div>

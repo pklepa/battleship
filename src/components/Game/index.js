@@ -11,7 +11,7 @@ function Game() {
   const [computer, setComputer] = useState(Player("Computer"));
   const [turn, setTurn] = useState(player.name);
   const [gameOver, setGameOver] = useState(false);
-  const [selectedShip, setSelectedShip] = useState("");
+  const [currentShip, setCurrentShip] = useState(false);
 
   // This update state is necessary hack because React doesnt update the DOM for changes in nested values, as it is the case for changes in players
   const [update, setUpdate] = useState(true);
@@ -55,16 +55,29 @@ function Game() {
     setUpdate(!update);
   }
 
-  function prepareForManualPlace(ship) {
-    if (!selectedShip) setSelectedShip(ship);
-    else setSelectedShip("");
+  function prepareManualPlace(ship) {
+    if (!currentShip) setCurrentShip(ship);
+    else setCurrentShip(false);
   }
 
-  function handleManualPlace() {}
+  function handleManualPlace(position) {
+    if (currentShip) {
+      player.placeShip(currentShip, position);
+      setCurrentShip(false);
+    }
+  }
 
+  function handleHarbourRotation() {
+    player.getFleet().map((ship) => {
+      ship.changeOrientation();
+      console.log(ship.getName(), ship.getOrientation());
+    });
+  }
+
+  // Alternates turns between player and COM
   useEffect(() => {
     if (turn === computer.name && gameOver === false) {
-      setTimeout(() => handleComputerAttack(), 500);
+      setTimeout(() => handleComputerAttack(), 0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
@@ -76,11 +89,14 @@ function Game() {
   return (
     <div className="game-wrapper">
       <Harbour
+        shipsToLoad={player.getFleet()}
+        prepareManualPlace={prepareManualPlace}
         handleAutoPlace={handleAutoPlace}
         handleResetPlacement={handleResetPlacement}
+        handleHarbourRotation={handleHarbourRotation}
       />
-      <Board player={player.getBoard()} />
-      <Board player={computer.getBoard()} onClick={handlePlayerAttack} />
+      <Board board={player.getBoard()} onClick={handleManualPlace} />
+      <Board board={computer.getBoard()} onClick={handlePlayerAttack} />
     </div>
   );
 }
