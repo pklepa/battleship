@@ -5,6 +5,7 @@ import "./index.css";
 import * as Player from "../../factories/player";
 import Board from "../Board";
 import Harbour from "../Harbour";
+import Scoreboard from "../Scoreboard";
 
 function Game() {
   const [player, setPlayer] = useState(Player("Player"));
@@ -95,6 +96,7 @@ function Game() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
 
+  // TODO: Toggle Harbour/Scoreboard as the game begins
   return (
     <div className="game-container">
       <div className="game-header">
@@ -123,6 +125,7 @@ function Game() {
           showShips={gameOver ? true : false}
           disableBoard={gameStart ? turn === computer.name : true}
         />
+        <Scoreboard shipsLoaded={player.getFleet()} />
       </div>
     </div>
   );
