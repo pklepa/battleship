@@ -124,35 +124,22 @@ function Gameboard() {
   }
 
   function getRandomUnattackedCoordinates(boardToAnalize) {
-    let valid = false;
+    let validRow, validCol;
+    let shuffledRows = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    let shuffledCols = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
-    let untestedRows = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-    let untestedCols = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    outer: for (const row of shuffledRows) {
+      for (const col of shuffledCols) {
+        if (!boardToAnalize[row][col].wasAttacked) {
+          validRow = row;
+          validCol = col;
 
-    let row = untestedRows.pop();
-    let col = untestedCols.pop();
-
-    let cell = boardToAnalize[row][col];
-    let test = cell.wasAttacked;
-
-    while (!valid) {
-      if (test === false) {
-        valid = true;
-      } else {
-        if (untestedCols.length > 0) {
-          col = untestedRows.pop();
-        } else {
-          untestedCols = _.shuffle([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-          col = untestedCols.pop();
-          row = untestedRows.pop();
+          break outer;
         }
       }
-
-      cell = boardToAnalize[row][col];
-      test = cell.wasAttacked;
     }
 
-    return [row, col];
+    return [validRow, validCol];
   }
 
   function isGameOver() {
