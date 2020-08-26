@@ -31,7 +31,12 @@ function Game() {
 
   function endTurn(lastPlayer) {
     if (lastPlayer.isGameOver() === true) {
-      setGameOver(lastPlayer.isGameOver());
+      setGameOver(true);
+      alert(
+        `Game over - ${
+          lastPlayer === player ? computer.name : player.name
+        } won!`
+      );
     } else {
       const nextTurn =
         lastPlayer.name === player.name ? computer.name : player.name;
@@ -90,10 +95,6 @@ function Game() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
 
-  useEffect(() => {
-    if (gameOver === true) alert("Gameover!");
-  }, [gameOver]);
-
   return (
     <div className="game-container">
       <div className="game-header">
@@ -119,7 +120,7 @@ function Game() {
           name={computer.name}
           board={computer.getBoard()}
           onClick={handlePlayerAttack}
-          showShips={false}
+          showShips={gameOver ? true : false}
           disableBoard={gameStart ? turn === computer.name : true}
         />
       </div>
