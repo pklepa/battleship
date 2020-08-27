@@ -3,8 +3,6 @@ import React from "react";
 import "./index.css";
 
 function MessageBoard(props) {
-  const { messages } = props;
-
   return (
     <div className="scroller">
       <p>Welcome to Battleship!</p>
