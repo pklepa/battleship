@@ -4,6 +4,10 @@ import _ from "lodash";
 function Gameboard() {
   let placedFleet = [];
 
+  let lastSuccessfulAttackCoordinates;
+  let lastSuccessfulDirection;
+  let lastSeenShip;
+
   // This declaration using .map() is necessary (as in contrast of nesting Array(10).fill(Array(10.fill('')))) as it ensures each row is a separate, independent array, not a reference for the first
   let board = Array(10)
     .fill(0)
@@ -108,7 +112,15 @@ function Gameboard() {
   }
 
   function receiveAttack(positionArray) {
-    const [row, col] = positionArray || getRandomUnattackedCoordinates(board);
+    let row, col;
+    if (positionArray) {
+      [row, col] = positionArray;
+    } else if (lastSeenShip) {
+      [row, col] =
+        getAdjascentCoordinates(board) || getRandomUnattackedCoordinates(board);
+    } else {
+      [row, col] = getRandomUnattackedCoordinates(board);
+    }
 
     const cellAttacked = board[row][col];
 
@@ -118,9 +130,74 @@ function Gameboard() {
     if (!cellAttacked.isEmpty) {
       let ship = placedFleet[cellAttacked.shipIndex];
       ship.hit(cellAttacked.shipBodyIndex);
+
+      lastSuccessfulAttackCoordinates = ship.isSunk() ? null : [row, col];
+      lastSeenShip = ship.isSunk() ? null : ship;
     }
 
     return true;
+  }
+
+  function getAdjascentCoordinates(boardToAnalize) {
+    const [up, down, left, right] = [-1, 1, -1, 1];
+
+    const offset = {
+      up: [-1, 0],
+      down: [1, 0],
+      left: [0, -1],
+      right: [0, 1],
+    };
+    const [r, c] = lastSuccessfulAttackCoordinates;
+
+    switch (lastSuccessfulDirection) {
+      case "up":
+      case "down":
+      case "left":
+      case "right":
+        const [rowOff, colOff] = offset[lastSuccessfulDirection];
+
+        if (
+          r + rowOff >= 0 &&
+          r + rowOff < 10 &&
+          c + colOff >= 0 &&
+          c + colOff < 10 &&
+          !boardToAnalize[r + rowOff][c + colOff].wasAttacked
+        ) {
+          lastSuccessfulDirection = !boardToAnalize[r + rowOff][c + colOff]
+            .isEmpty
+            ? lastSuccessfulDirection
+            : null;
+
+          return [r + rowOff, c + colOff];
+        }
+        break;
+      default:
+        break;
+    }
+
+    if (r + up >= 0 && !boardToAnalize[r + up][c].wasAttacked) {
+      lastSuccessfulDirection = !boardToAnalize[r + up][c].isEmpty
+        ? "up"
+        : null;
+      return [r + up, c];
+    } else if (r + down < 10 && !boardToAnalize[r + down][c].wasAttacked) {
+      lastSuccessfulDirection = !boardToAnalize[r + down][c].isEmpty
+        ? "down"
+        : null;
+      return [r + down, c];
+    } else if (c + left >= 0 && !boardToAnalize[r][c + left].wasAttacked) {
+      lastSuccessfulDirection = !boardToAnalize[r][c + left].isEmpty
+        ? "left"
+        : null;
+      return [r, c + left];
+    } else if (c + right < 10 && !boardToAnalize[r][c + right].wasAttacked) {
+      lastSuccessfulDirection = !boardToAnalize[r][c + right].isEmpty
+        ? "right"
+        : null;
+      return [r, c + right];
+    }
+
+    return false;
   }
 
   function getRandomUnattackedCoordinates(boardToAnalize) {
