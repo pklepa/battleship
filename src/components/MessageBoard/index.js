@@ -2,6 +2,7 @@ import React from "react";
 
 import "./index.css";
 
+// TODO: MessageBoard should display every play made or at least the events of sunk ships
 function MessageBoard(props) {
   return (
     <div className="scroller">
