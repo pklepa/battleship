@@ -103,14 +103,19 @@ function Game() {
         <button onClick={startGame}>{gameStart ? "Restart" : "Start"}</button>
       </div>
       <div className="game-wrapper">
-        <Harbour
-          shipsToLoad={player.getFleet()}
-          shipsLoaded={player.getPlacedFleet()}
-          prepareManualPlace={prepareManualPlace}
-          handleAutoPlace={handleAutoPlace}
-          handleResetPlacement={handleResetPlacement}
-          handleHarbourRotation={handleHarbourRotation}
-        />
+        {gameStart ? (
+          <Scoreboard shipsLoaded={player.getFleet()} />
+        ) : (
+          <Harbour
+            shipsToLoad={player.getFleet()}
+            shipsLoaded={player.getPlacedFleet()}
+            prepareManualPlace={prepareManualPlace}
+            handleAutoPlace={handleAutoPlace}
+            handleResetPlacement={handleResetPlacement}
+            handleHarbourRotation={handleHarbourRotation}
+          />
+        )}
+
         <Board
           name={player.name}
           board={player.getBoard()}
@@ -125,7 +130,7 @@ function Game() {
           showShips={gameOver ? true : false}
           disableBoard={gameStart ? turn === computer.name : true}
         />
-        <Scoreboard shipsLoaded={player.getFleet()} />
+        <Scoreboard shipsLoaded={computer.getFleet()} />
       </div>
     </div>
   );

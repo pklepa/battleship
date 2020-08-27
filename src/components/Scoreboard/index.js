@@ -3,7 +3,6 @@ import React from "react";
 import "./index.css";
 import Ship from "../Ship";
 
-// TODO: Add an overlay for sunken ships
 function Scoreboard(props) {
   const { shipsLoaded } = props;
 
@@ -14,6 +13,10 @@ function Scoreboard(props) {
           return (
             <div className="scoreboard-ship">
               <h1>{ship.getName()}</h1>
+
+              <div
+                className={`ship-overlay ${ship.isSunk() ? "" : "hidden"}`}
+              ></div>
 
               <Ship
                 key={i}
