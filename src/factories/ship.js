@@ -1,4 +1,4 @@
-const _ = require("lodash");
+import _ from "lodash";
 
 // Ship Factory function
 function Ship(ship) {
@@ -78,4 +78,4 @@ function Ship(ship) {
   };
 }
 
-module.exports = Ship;
+export default Ship;

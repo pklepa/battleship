@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import "./index.css";
 
-import * as Player from "../../factories/player";
+import Player from "../../factories/player";
 import Board from "../Board";
 import Harbour from "../Harbour";
 import Scoreboard from "../Scoreboard";

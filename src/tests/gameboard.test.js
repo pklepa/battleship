@@ -1,7 +1,7 @@
-const _ = require("lodash");
+import _ from "lodash";
 
-const Ship = require("../factories/ship");
-const Gameboard = require("../factories/gameboard");
+import Ship from "../factories/ship";
+import Gameboard from "../factories/gameboard";
 
 it("Gameboard() creates empty 10x10 board", () => {
   const board = Array(10)

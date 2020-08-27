@@ -1,4 +1,4 @@
-const Ship = require("../factories/ship");
+import Ship from "../factories/ship";
 
 test("Ship has length", () => {
   expect(Ship("Cruiser").getLength()).toBe(3);

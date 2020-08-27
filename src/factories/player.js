@@ -1,5 +1,5 @@
-const Gameboard = require("./gameboard");
-const Ship = require("./ship");
+import Ship from "./ship";
+import Gameboard from "./gameboard";
 
 function Player(playerName) {
   const name = playerName;
@@ -70,4 +70,6 @@ function Player(playerName) {
   };
 }
 
-module.exports = Player;
+export default Player;
+
+// module.exports = Player;

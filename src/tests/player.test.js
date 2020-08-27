@@ -1,7 +1,6 @@
-const _ = require("lodash");
-
-const Player = require("../factories/player");
-const Ship = require("../factories/ship");
+import _ from "lodash";
+import Player from "../factories/player";
+import Ship from "../factories/ship";
 
 it("Player exposes Gameboard's getBoard method", () => {
   const board = Array(10)

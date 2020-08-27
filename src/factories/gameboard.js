@@ -1,4 +1,4 @@
-const _ = require("lodash");
+import _ from "lodash";
 
 // Gameboard Factory
 function Gameboard() {
@@ -161,4 +161,4 @@ function Gameboard() {
   };
 }
 
-module.exports = Gameboard;
+export default Gameboard;
