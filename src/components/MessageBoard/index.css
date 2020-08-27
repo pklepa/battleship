@@ -1,0 +1,38 @@
+.scroller {
+  width: 500px;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 8px;
+  color: var(--empty-cell);
+  font-family: monospace;
+  line-height: 1.3em;
+
+  border: 2px solid var(--ship-color);
+  border-radius: 10px;
+
+  overflow: auto;
+}
+
+/* width */
+.scroller::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+.scroller::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+.scroller::-webkit-scrollbar-thumb {
+  background: #fa744f;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+.scroller::-webkit-scrollbar-thumb:hover {
+  background: #fdcb9e;
+}

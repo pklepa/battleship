@@ -6,6 +6,7 @@ import * as Player from "../../factories/player";
 import Board from "../Board";
 import Harbour from "../Harbour";
 import Scoreboard from "../Scoreboard";
+import MessageBoard from "../MessageBoard";
 
 function Game() {
   const [player, setPlayer] = useState(Player("Player"));
@@ -107,7 +108,7 @@ function Game() {
   return (
     <div className="game-container">
       <div className="game-header">
-        <button onClick={startGame}>{gameStart ? "Restart" : "Start"}</button>
+        <MessageBoard />
       </div>
       <div className="game-wrapper">
         {gameStart ? (
@@ -138,6 +139,9 @@ function Game() {
           disableBoard={gameStart ? turn === computer.name : true}
         />
         <Scoreboard shipsLoaded={computer.getFleet()} />
+      </div>
+      <div className="game-footer">
+        <button onClick={startGame}>{gameStart ? "Restart" : "Start"}</button>
       </div>
     </div>
   );
