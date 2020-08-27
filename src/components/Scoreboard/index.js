@@ -11,7 +11,7 @@ function Scoreboard(props) {
       <div className="scoreboard-ships">
         {shipsLoaded.map((ship, i) => {
           return (
-            <div className="scoreboard-ship">
+            <div key={i} className="scoreboard-ship">
               <h1>{ship.getName()}</h1>
 
               <div
@@ -19,7 +19,6 @@ function Scoreboard(props) {
               ></div>
 
               <Ship
-                key={i}
                 horizontalOrientation={true}
                 length={ship.getLength()}
                 onClick={() => {}}

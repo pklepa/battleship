@@ -19,6 +19,11 @@ function Game() {
   const [update, setUpdate] = useState(true);
 
   function startGame() {
+    if (gameStart) {
+      handleResetPlacement();
+      return;
+    }
+
     if (player.getFleet().length !== player.getPlacedFleet().length) return;
 
     setGameStart(true);
@@ -63,6 +68,9 @@ function Game() {
   function handleResetPlacement() {
     setPlayer(Player(player.name));
     setComputer(Player(computer.name));
+
+    setGameOver(false);
+    setGameStart(false);
     setUpdate(!update);
   }
 
@@ -96,7 +104,6 @@ function Game() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
 
-  // TODO: Toggle Harbour/Scoreboard as the game begins
   return (
     <div className="game-container">
       <div className="game-header">
