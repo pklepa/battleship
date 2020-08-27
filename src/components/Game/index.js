@@ -19,6 +19,7 @@ function Game() {
   // This update state is necessary hack because React doesnt update the DOM for changes in nested values, as it is the case for changes in players
   const [update, setUpdate] = useState(true);
 
+  // TODO: When the game is over, show winner and message in the MessageBoard
   function startGame() {
     if (gameStart) {
       handleResetPlacement();
@@ -105,6 +106,7 @@ function Game() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [turn]);
 
+  // TODO: Select AI dificulty
   return (
     <div className="game-container">
       <div className="game-header">

@@ -3,6 +3,7 @@ import React from "react";
 import "./index.css";
 import { ReactComponent as Logo } from "../../assets/images/port.svg";
 
+// TODO: Add a link to github
 function Header() {
   const style = {
     width: 45,

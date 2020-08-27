@@ -1,6 +1,7 @@
 import Ship from "./ship";
 import Gameboard from "./gameboard";
 
+// TODO: Improve AI gameplay (make it look for adjascent squares)
 function Player(playerName) {
   const name = playerName;
   const {
