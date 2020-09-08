@@ -10,7 +10,7 @@
 
 #### web
 
-![SS_battleship_web](https://user-images.githubusercontent.com/22618438/92490632-a3f8d100-f1c7-11ea-8cd9-e1640792f0bd.png)
+![SS_battleship_web](https://user-images.githubusercontent.com/22618438/92491599-ca6b3c00-f1c8-11ea-8b7c-ace78dafa572.png)
 
 #### unit tests
 
