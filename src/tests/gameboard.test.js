@@ -141,21 +141,6 @@ it("receiveAttack() call with no parameter attacks a random coordinate", () => {
   expect(initialBoard).not.toEqual(gameboard.getBoard());
 });
 
-// it("if last attack hit a target, receiveAttack() tries adjascent cells", () => {
-//   const gameboard = Gameboard();
-//   const ship = Ship("Cruiser");
-//   console.log(ship.getOrientation(), ship.getLength());
-//   gameboard.placeShip(ship, [0, 1]);
-//   console.log(gameboard.receiveAttack([0, 1]));
-//   console.log(gameboard.receiveAttack());
-//   console.log(gameboard.receiveAttack());
-//   console.log(gameboard.receiveAttack());
-//   console.log(gameboard.receiveAttack());
-//   console.log(gameboard.receiveAttack());
-
-//   expect(1).toBe(1);
-// });
-
 it("isGameOver returns false if there are any ships alive", () => {
   const gameboard = Gameboard();
   gameboard.placeShip(Ship("Cruiser"), [0, 0]);
