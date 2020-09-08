@@ -18,7 +18,7 @@
 
 ## Objectives & Outcomes
 
-Even though this project has a rather clear desired outcome as declared by its scope (recreation of Battleship game), my main focus whilst in development is to try my hand at the modern and, quite frankly, necessary philosophy of **Test Driven Development** as it improves the overall design of the code, encourages refactoring, reduces bugs both in new and in existing features and so much more.
+Even though this project has a rather clear desired outcome as declared by its scope (recreation of Battleship game), my main focus whilst in development is to try my hand at the modern and, quite frankly, necessary philosophy of **Test Driven Development** as it improves the overall design of the code, encourages refactoring, reduces bugs both in new and existing features alike.
 
 In summary, the objectives are:
 
