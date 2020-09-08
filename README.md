@@ -1,60 +1,62 @@
-## Notes
+# battleship
 
-This is a quick guide to setup VSCode in a new React application using ESLint, Prettier, Husky and Pretty-quick as instructed by [Manorisms](https://www.youtube.com/watch?v=bfyI9yl3qfE).
+## Description
 
-The approach is to let ESLint run the prettier package for Javascript files and let the Prettier extension for everything else.
+[Odin] Recreation of the classic pen and paper game of [Battleship](<https://www.wikiwand.com/en/Battleship_(game)>) on the browser.
 
-Also, Husky calls Pretty-quickin order to automatically run Prettier against files that were modified before each commit.
+> See it live on [pklepa.github.io/battleship](https://pklepa.github.io/battleship/)
 
-Finally, this is a Test Driven Development and uses Jest as a testing tool.
+### Screenshots
 
-### Step-by-step
+#### web
 
-1. Bootstrap create-react-app
-   `npx create-react-app APP_NAME`
+![SS_small-library-react_web](https://user-images.githubusercontent.com/22618438/90070807-d1d31e80-dcca-11ea-8487-c0b36105a5c0.png)
 
-1.1. If you haven't, add ESLint extension in VSCode.
-1.2. Do the same for the Prettier extension
+#### unit tests
 
-2. CD into folder and install the following:
+![SS_small-library-react_web](https://user-images.githubusercontent.com/22618438/90070807-d1d31e80-dcca-11ea-8487-c0b36105a5c0.png)
 
-   ```
-   npm i prettier eslint-config-prettier eslint-plugin-prettier -D
+## Objectives & Outcomes
 
-   npm i husky lint-staged -D
+Even though this project has a rather clear desired outcome as declared by its scope (recreation of Battleship game), my main focus whilst in development is to try my hand at the modern and, quite frankly, necessary philosophy of **Test Driven Development** as it improves the overall design of the code, encourages refactoring, reduces bugs both in new and in existing features and so much more.
 
-   npm install --save-dev jest
-   ```
+In summary, the objectives are:
 
-3. Create a .eslintrc file with:
+- Practice the concept of **Test Driven Development** in a relatively large project.
 
-```
-  {
-    "extends": ["react-app", "plugin:prettier/recommended"]
-  }
-```
+- Write Unit Tests for most of the business logic using [Jest](https://jestjs.io/).
 
-4. Add this to `package.json`:
+- Improve code design and preparation in writing tests _before_ the actual code.
 
-```
-  "husky": {
-      "hooks": {
-        "pre-commit": "pretty-quick --staged"
-      }
-  }
-```
+Also, other soft skills were healthly improved in this project:
 
-3.2. If you haven't, add these configurations to the Settings JSON file for VSCode:
+- Further improve React proficiency in functional components using Hooks.
 
-```
-  "editor.formatOnSave": true,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
+- Familiarize with Jest's documentation.
 
-  "[javascript]": {
-    "editor.formatOnSave": false
-  },
-  "eslint.alwaysShowStatus": true,
-  "prettier.disableLanguages": ["js"],
-```
+- Make use of one of the most popular utility libraries in [Lodash](https://lodash.com/).
+
+## Development
+
+### Javascript Framework
+
+- [React](https://github.com/facebook/create-react-app)
+
+### Libraries, extensions and tools
+
+- [Jest](https://jestjs.io/) - JavaScript testing framework to write Unit Tests.
+- [Lodash](https://lodash.com/) - JS utility library.
+- [Husky](https://www.npmjs.com/package/husky) - Workflow improvement package to add custom scripts against the repo (in this case, pre-commiting linting and formating)
+- [ESLint](https://eslint.org/) - A linter tool to standardize code
+- [Prettier](https://prettier.io/) - Code formatter
+- [Github Pages](https://pages.github.com/) - Hosting
+
+## More information
+
+- Made as a solution for the Frameworks Project in [The Odin Project](https://www.theodinproject.com/courses/javascript/lessons/battleship)
+
+- [Unit testing in JavaScript, by FunFunFunction](https://www.youtube.com/watch?v=3PjdxjWK0F0)
+
+- [ESLint and Prettier configuration on VSCode, by Manorisms](https://www.youtube.com/watch?v=bfyI9yl3qfE)
+
+- [GH-Pages Deployment](https://dev.to/yuribenjamin/how-to-deploy-react-app-in-github-pages-2a1f)
