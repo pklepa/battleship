@@ -10,11 +10,11 @@
 
 #### web
 
-![SS_small-library-react_web](https://user-images.githubusercontent.com/22618438/90070807-d1d31e80-dcca-11ea-8487-c0b36105a5c0.png)
+![SS_battleship_web](https://user-images.githubusercontent.com/22618438/92490632-a3f8d100-f1c7-11ea-8cd9-e1640792f0bd.png)
 
 #### unit tests
 
-![SS_small-library-react_web](https://user-images.githubusercontent.com/22618438/90070807-d1d31e80-dcca-11ea-8487-c0b36105a5c0.png)
+![SS_battleship_tests](https://user-images.githubusercontent.com/22618438/92490063-e79f0b00-f1c6-11ea-86a5-322cf2f31e9f.png)
 
 ## Objectives & Outcomes
 
